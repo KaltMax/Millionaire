@@ -1,5 +1,5 @@
 import express, { type Express, type Request, type Response } from 'express';
-import { round } from './data/quiz.ts';
+import { getRandomRound } from './data/quiz.ts';
 import cors from 'cors';
 
 const app: Express = express();
@@ -12,7 +12,7 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 app.get('/round', (req: Request, res: Response) => {
-    res.json(round);
+    res.json(getRandomRound());
 });
 
 app.listen(port, () => {
