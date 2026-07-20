@@ -1,15 +1,8 @@
 import { useState, useEffect } from 'react'
 import './App.css'
-
-interface Round {
-  question: string;
-  answers: Answer[];
-}
-
-interface Answer {
-  text: string;
-  isCorrect: boolean;
-}
+import { Header } from './components/Header.tsx'
+import type { Round, Answer } from './types/quiz.ts'
+import { fetchRound } from './api/quiz.ts'
 
 function App() {
   const [round, setRound] = useState<Round | null>(null);
@@ -28,9 +21,8 @@ function App() {
   useEffect(() => { 
     const controller = new AbortController();
 
-    fetch('http://localhost:3000/round', { signal: controller.signal })
-      .then((response) => response.json())
-      .then((data: Round) => {
+    fetchRound(controller.signal)
+      .then((data) => {
         setRound(data);
       })
       .catch((error) => {
@@ -46,9 +38,7 @@ function App() {
 
   return (
     <>
-      <div className="header">
-        <h1>Are you gonna be a millionaire?</h1>
-      </div>
+      <Header />
       <div className="quizContainer">
         <h2 className="questionCard">{round?.question}</h2>
         <div className="answerContainer">
