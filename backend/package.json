@@ -1,0 +1,37 @@
+{
+  "name": "backend",
+  "version": "0.0.1",
+  "description": "Millionaire backend",
+  "keywords": [
+    "millionaire",
+    "quiz",
+    "game"
+  ],
+  "homepage": "https://github.com/KaltMax/Millionaire#readme",
+  "bugs": {
+    "url": "https://github.com/KaltMax/Millionaire/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KaltMax/Millionaire.git"
+  },
+  "license": "MIT",
+  "author": "Maximilian Kaltenreiner",
+  "type": "module",
+  "main": "dist/app.js",
+  "scripts": {
+    "dev": "tsx watch src/app.ts",
+    "typecheck": "tsc --noEmit",
+    "build": "tsc",
+    "start": "node dist/app.js"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^26.1.1",
+    "tsx": "^4.23.1",
+    "typescript": "^7.0.2"
+  }
+}
