@@ -1,0 +1,31 @@
+{
+  "name": "millionaire",
+  "version": "0.0.1",
+  "description": "Small fun quiz game",
+  "private": true,
+  "workspaces": [
+    "shared",
+    "backend",
+    "frontend"
+  ],
+  "scripts": {
+    "dev": "concurrently -n backend,frontend -c blue,magenta \"npm run dev -w backend\" \"npm run dev -w frontend\"",
+    "build": "npm run build -w @millionaire/shared && npm run build -w backend && npm run build -w frontend",
+    "lint": "npm run lint -w backend && npm run lint -w frontend",
+    "test": "npm run test -w backend && npm run test -w frontend"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KaltMax/Millionaire.git"
+  },
+  "keywords": [],
+  "author": "Maximilian Kaltenreiner",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/KaltMax/Millionaire/issues"
+  },
+  "homepage": "https://github.com/KaltMax/Millionaire#readme",
+  "devDependencies": {
+    "concurrently": "^9.0.0"
+  }
+}
