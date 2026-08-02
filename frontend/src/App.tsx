@@ -1,24 +1,30 @@
-import { useState, useEffect } from 'react'
-import './App.css'
-import { Header } from './components/Header.tsx'
-import type { Round, Answer } from '@millionaire/shared'
-import { fetchRound } from './api/quiz.ts'
+import { useState, useEffect } from 'react';
+import './App.css';
+import { Header } from './components/Header.tsx';
+import type { Round, Answer } from '@millionaire/shared';
+import { fetchRound } from './api/quiz.ts';
 
 function App() {
   const [round, setRound] = useState<Round | null>(null);
   const [selectedAnswer, setSelectedAnswer] = useState<Answer | null>(null);
-  const [answerClassName, setAnswerClassName] = useState<string | undefined>(undefined);
-  const [resultClassName, setResultClassName] = useState<string | undefined>(undefined);
+  const [answerClassName, setAnswerClassName] = useState<string | undefined>(
+    undefined,
+  );
+  const [resultClassName, setResultClassName] = useState<string | undefined>(
+    undefined,
+  );
   const [resultMessage, setResultMessage] = useState<string | null>(null);
 
   const handleAnswerClick = (answer: Answer) => {
     setSelectedAnswer(answer);
-    setAnswerClassName(answer.isCorrect ? 'correctAnswerButton' : 'wrongAnswerButton');
+    setAnswerClassName(
+      answer.isCorrect ? 'correctAnswerButton' : 'wrongAnswerButton',
+    );
     setResultClassName(answer.isCorrect ? 'correctResult' : 'wrongResult');
     setResultMessage(answer.isCorrect ? 'Correct answer!' : 'Wrong answer!');
   };
 
-  useEffect(() => { 
+  useEffect(() => {
     const controller = new AbortController();
 
     fetchRound(controller.signal)
@@ -46,7 +52,11 @@ function App() {
             <button
               key={answer.text}
               onClick={() => handleAnswerClick(answer)}
-              className={selectedAnswer?.text === answer.text ? answerClassName : 'answerButton'}
+              className={
+                selectedAnswer?.text === answer.text
+                  ? answerClassName
+                  : 'answerButton'
+              }
             >
               {answer.text}
             </button>
@@ -54,12 +64,10 @@ function App() {
         </div>
       </div>
       <div className="resultCard">
-        {resultMessage && (
-          <p className={resultClassName}>{resultMessage}</p>
-        )}
+        {resultMessage && <p className={resultClassName}>{resultMessage}</p>}
       </div>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

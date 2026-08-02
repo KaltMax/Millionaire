@@ -8,13 +8,13 @@ const port = 3000;
 app.use(cors());
 
 app.get('/', (req: Request, res: Response) => {
-    res.send('Hello World!');
+  res.send('Hello World!');
 });
 
 app.get('/round', (req: Request, res: Response) => {
-    res.json(getRandomRound());
+  res.json(getRandomRound());
 });
 
 app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`);
+  console.log(`Example app listening on port ${port}`);
 });
