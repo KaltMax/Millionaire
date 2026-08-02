@@ -10,9 +10,25 @@
   ],
   "scripts": {
     "dev": "concurrently -n backend,frontend -c blue,magenta \"npm run dev -w backend\" \"npm run dev -w frontend\"",
+    "dev:backend": "npm run dev -w backend",
+    "dev:frontend": "npm run dev -w frontend",
     "build": "npm run build -w @millionaire/shared && npm run build -w backend && npm run build -w frontend",
+    "build:backend": "npm run build -w backend",
+    "build:frontend": "npm run build -w frontend",
     "lint": "npm run lint -w backend && npm run lint -w frontend",
-    "test": "npm run test -w backend && npm run test -w frontend"
+    "lint:backend": "npm run lint -w backend",
+    "lint:frontend": "npm run lint -w frontend",
+    "test": "npm run test -w backend && npm run test -w frontend",
+    "test:backend": "npm run test -w backend",
+    "test:frontend": "npm run test -w frontend",
+    "format": "prettier --write .",
+    "format:backend": "prettier --write backend",
+    "format:frontend": "prettier --write frontend",
+    "format:shared": "prettier --write shared",
+    "format:check": "prettier --check .",
+    "format:check:backend": "prettier --check backend",
+    "format:check:frontend": "prettier --check frontend",
+    "format:check:shared": "prettier --check shared"
   },
   "repository": {
     "type": "git",
@@ -26,6 +42,7 @@
   },
   "homepage": "https://github.com/KaltMax/Millionaire#readme",
   "devDependencies": {
-    "concurrently": "^9.0.0"
+    "concurrently": "^9.0.0",
+    "prettier": "^3.9.6"
   }
 }
