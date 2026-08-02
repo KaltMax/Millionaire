@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import './App.css'
 import { Header } from './components/Header.tsx'
-import type { Round, Answer } from './types/quiz.ts'
+import type { Round, Answer } from '@millionaire/shared'
 import { fetchRound } from './api/quiz.ts'
 
 function App() {

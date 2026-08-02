@@ -1,13 +1,4 @@
-export interface Answer {
-    text: string;
-    isCorrect: boolean;
-}
-
-export interface Round {
-    id: number;
-    question: string;
-    answers: Answer[];
-}
+import type { Round } from '@millionaire/shared';
 
 // function to get a random round from the rounds array
 export function getRandomRound(): Round {
