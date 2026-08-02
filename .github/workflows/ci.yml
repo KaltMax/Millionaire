@@ -7,7 +7,7 @@ on:
 
 jobs:
   backend:
-    name: Backend (prettier check -> lint -> build -> test)
+    name: Backend (format check -> lint -> build -> test)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
@@ -17,7 +17,7 @@ jobs:
           cache: npm
       - name: Install
         run: npm ci
-      - name: Prettier Check
+      - name: Format Check
         run: npm run format:check:backend
       - name: Lint
         run: npm run lint:backend
@@ -27,7 +27,7 @@ jobs:
         run: npm run test:backend
 
   frontend:
-    name: Frontend (prettier check -> lint -> build -> test)
+    name: Frontend (format check -> lint -> build -> test)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
@@ -37,7 +37,7 @@ jobs:
           cache: npm
       - name: Install
         run: npm ci
-      - name: Prettier Check
+      - name: Format Check
         run: npm run format:check:frontend
       - name: Lint
         run: npm run lint:frontend
