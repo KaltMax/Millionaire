@@ -1,1 +1,1 @@
-export type { Answer, Round } from './quiz.ts';
+export type { Answer, Round, GuessRequest, GuessResult } from './quiz.ts';

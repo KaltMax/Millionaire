@@ -1,6 +1,6 @@
 import 'dotenv/config';
 import express, { type Express, type Request, type Response } from 'express';
-import { getRandomRound } from './data/quiz.ts';
+import { getRandomPublicRound, gradeGuess } from './data/quiz.ts';
 import cors from 'cors';
 
 const app: Express = express();
@@ -8,13 +8,32 @@ const port = Number(process.env.PORT);
 const corsOrigin = process.env.CORS_ORIGIN;
 
 app.use(cors({ origin: corsOrigin }));
+app.use(express.json());
 
 app.get('/', (req: Request, res: Response) => {
   res.send('Hello World!');
 });
 
 app.get('/round', (req: Request, res: Response) => {
-  res.json(getRandomRound());
+  res.json(getRandomPublicRound());
+});
+
+app.post('/round/:id/guess', (req: Request, res: Response) => {
+  const roundId = Number(req.params.id);
+  const answerId = req.body?.answerId;
+
+  if (!Number.isInteger(roundId) || !Number.isInteger(answerId)) {
+    res.status(400).json({ error: 'roundId and answerId must be integers' });
+    return;
+  }
+
+  const result = gradeGuess(roundId, answerId);
+  if (result === null) {
+    res.status(404).json({ error: 'Round not found or no correct answer' });
+    return;
+  }
+
+  res.json(result);
 });
 
 app.listen(port, () => {
