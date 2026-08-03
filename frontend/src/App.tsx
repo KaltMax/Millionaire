@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import './App.css';
 import { Header } from './components/Header.tsx';
 import type { Round, Answer } from '@millionaire/shared';
-import { fetchRound } from './api/quiz.ts';
+import { fetchRound, submitGuess } from './api/quiz.ts';
 
 function App() {
   const [round, setRound] = useState<Round | null>(null);
@@ -14,14 +14,33 @@ function App() {
     undefined,
   );
   const [resultMessage, setResultMessage] = useState<string | null>(null);
+  const [correctAnswerId, setCorrectAnswerId] = useState<number | null>(null);
 
-  const handleAnswerClick = (answer: Answer) => {
+  const handleAnswerClick = async (answer: Answer) => {
+    if (!round || selectedAnswer) return; // Ignore clicks if no round is loaded or an answer has already been selected
     setSelectedAnswer(answer);
-    setAnswerClassName(
-      answer.isCorrect ? 'correctAnswerButton' : 'wrongAnswerButton',
-    );
-    setResultClassName(answer.isCorrect ? 'correctResult' : 'wrongResult');
-    setResultMessage(answer.isCorrect ? 'Correct answer!' : 'Wrong answer!');
+
+    try {
+      const result = await submitGuess(round.id, answer.id);
+      setAnswerClassName(
+        result.correct ? 'correctAnswerButton' : 'wrongAnswerButton',
+      );
+      setResultClassName(result.correct ? 'correctResult' : 'wrongResult');
+      setResultMessage(result.correct ? 'Correct answer!' : 'Wrong answer!');
+      setCorrectAnswerId(result.correctAnswerId);
+    } catch (error) {
+      console.error('Error submitting guess:', error);
+    }
+  };
+
+  const getButtonClassName = (answer: Answer): string => {
+    if (correctAnswerId === answer.id) {
+      return 'correctAnswerButton';
+    } else if (selectedAnswer?.id === answer.id) {
+      return answerClassName || 'answerButton';
+    } else {
+      return 'answerButton';
+    }
   };
 
   useEffect(() => {
@@ -50,13 +69,9 @@ function App() {
         <div className="answerContainer">
           {round?.answers.map((answer) => (
             <button
-              key={answer.text}
+              key={answer.id}
               onClick={() => handleAnswerClick(answer)}
-              className={
-                selectedAnswer?.text === answer.text
-                  ? answerClassName
-                  : 'answerButton'
-              }
+              className={getButtonClassName(answer)}
             >
               {answer.text}
             </button>

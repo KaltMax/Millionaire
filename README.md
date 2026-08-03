@@ -63,8 +63,8 @@ VITE_API_URL=http://localhost:3000
 Run from the repo root. Each command has `:backend`, `:frontend`, and (where
 applicable) `:shared` variants to scope it to a single workspace.
 
-| Command                  | Description                                    |
-| ------------------------ | ---------------------------------------------- |
+| Command                | Description                                    |
+| ---------------------- | ---------------------------------------------- |
 | `npm run dev`          | Run backend and frontend together (parallel)   |
 | `npm run build`        | Type-check and build all workspaces            |
 | `npm test`             | Run the Vitest suites                          |
