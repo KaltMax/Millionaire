@@ -1,11 +1,13 @@
+import 'dotenv/config';
 import express, { type Express, type Request, type Response } from 'express';
 import { getRandomRound } from './data/quiz.ts';
 import cors from 'cors';
 
 const app: Express = express();
-const port = 3000;
+const port = Number(process.env.PORT);
+const corsOrigin = process.env.CORS_ORIGIN;
 
-app.use(cors());
+app.use(cors({ origin: corsOrigin }));
 
 app.get('/', (req: Request, res: Response) => {
   res.send('Hello World!');
