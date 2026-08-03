@@ -30,7 +30,10 @@ export function findRound(roundId: number): InternalRound | undefined {
   return rounds.find((r) => r.id === roundId);
 }
 
-export function gradeGuess(round: InternalRound, answerId: number): GuessResult {
+export function gradeGuess(
+  round: InternalRound,
+  answerId: number,
+): GuessResult {
   const correctAnswer = round.answers.find((a) => a.isCorrect);
   if (!correctAnswer) {
     // Invariant: every valid round has exactly one correct answer.
