@@ -26,18 +26,15 @@ export function getRandomPublicRound(): Round {
   return toPublicRound(rounds[randomIndex]);
 }
 
-export function gradeGuess(
-  roundId: number,
-  answerId: number,
-): GuessResult | null {
-  const round = rounds.find((r) => r.id === roundId);
-  if (!round) {
-    return null;
-  }
+export function findRound(roundId: number): InternalRound | undefined {
+  return rounds.find((r) => r.id === roundId);
+}
 
+export function gradeGuess(round: InternalRound, answerId: number): GuessResult {
   const correctAnswer = round.answers.find((a) => a.isCorrect);
   if (!correctAnswer) {
-    return null;
+    // Invariant: every valid round has exactly one correct answer.
+    throw new Error(`Round ${round.id} has no correct answer`);
   }
 
   return {

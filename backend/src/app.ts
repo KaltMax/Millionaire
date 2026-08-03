@@ -1,6 +1,6 @@
 import 'dotenv/config';
 import express, { type Express, type Request, type Response } from 'express';
-import { getRandomPublicRound, gradeGuess } from './data/quiz.ts';
+import { getRandomPublicRound, findRound, gradeGuess } from './data/quiz.ts';
 import cors from 'cors';
 
 const app: Express = express();
@@ -27,12 +27,13 @@ app.post('/round/:id/guess', (req: Request, res: Response) => {
     return;
   }
 
-  const result = gradeGuess(roundId, answerId);
-  if (result === null) {
-    res.status(404).json({ error: 'Round not found or no correct answer' });
+  const round = findRound(roundId);
+  if (!round) {
+    res.status(404).json({ error: 'Round not found' });
     return;
   }
 
+  const result = gradeGuess(round, answerId);
   res.json(result);
 });
 
