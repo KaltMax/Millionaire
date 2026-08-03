@@ -45,18 +45,35 @@ The three packages are npm **workspaces**, so a single install at the root wires
 git clone https://github.com/KaltMax/Millionaire.git
 cd Millionaire
 npm install        # installs all workspaces from the single root lockfile
+
+# Copy the env templates
+cp backend/.env.example backend/.env
+cp frontend/.env.example frontend/.env
+
 npm run dev        # starts backend and frontend together
 ```
 
-- Backend API: [http://localhost:3000](http://localhost:3000) (endpoint: `GET /round`)
+- Backend API: [http://localhost:3000](http://localhost:3000) (endpoints: `GET /round`, `POST /round/:id/guess`)
 - Frontend: [http://localhost:5173](http://localhost:5173)
 
-By default the frontend calls the backend at `http://localhost:3000`. To point it
-elsewhere, set `VITE_API_URL` (e.g. in `frontend/.env`):
+## Environment variables
 
-```bash
-VITE_API_URL=http://localhost:3000
-```
+Each package reads configuration from a local, git-ignored `.env` file. Copy the
+`.env.example` templates (done in "Getting started" above) and adjust as needed.
+
+**`backend/.env`** — validated on startup; the server **exits** if a value is missing:
+
+| Variable      | Example                 | Description                            |
+| ------------- | ----------------------- | -------------------------------------- |
+| `PORT`        | `3000`                  | Port the Express API listens on        |
+| `CORS_ORIGIN` | `http://localhost:5173` | Allowed CORS origin (the frontend URL) |
+
+**`frontend/.env`** — read by Vite at build time. `VITE_`-prefixed vars are **inlined
+into the client bundle** (public — never put secrets here):
+
+| Variable       | Example                 | Description             |
+| -------------- | ----------------------- | ----------------------- |
+| `VITE_API_URL` | `http://localhost:3000` | Base URL of the backend |
 
 ## Available scripts
 
